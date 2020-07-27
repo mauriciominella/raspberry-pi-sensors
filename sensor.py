@@ -1,5 +1,7 @@
 # import many libraries
 from __future__ import print_function  
+import Adafruit_DHT
+import time
 import pickle
 import os.path
 from googleapiclient.discovery import build  
@@ -12,10 +14,10 @@ import datetime
 # My Spreadsheet ID ... See google documentation on how to derive this
 MY_SPREADSHEET_ID = '1aElvUgojGj9XqDijivIEmD44EwbR1q_m8v2AV6QDN9o'
 
-def update_sheet(sheetname, temperature, pressure, humidity):  
+def update_sheet(sheetname, temperature, humidity):  
     """update_sheet method:
        appends a row of a sheet in the spreadsheet with the 
-       the latest temperature, pressure and humidity sensor data
+       the latest temperature and humidity sensor data
     """
     # authentication, authorization step
     SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -44,7 +46,7 @@ def update_sheet(sheetname, temperature, pressure, humidity):
     # Call the Sheets API, append the next row of sensor data
     # values is the array of rows we are updating, its a single row
     values = [ [ str(datetime.datetime.now()), 
-        'Temperature', temperature, 'Pressure', pressure, 'Humidity', humidity ] ]
+        'Temperature', temperature, 'Humidity', humidity ] ]
     body = { 'values': values }
     # call the append API to perform the operation
     result = service.spreadsheets().values().append(
@@ -60,13 +62,12 @@ def main():
        reads the BME280 chip to read the three sensors, then
        call update_sheets method to add that sensor data to the spreadsheet
     """
+    humidity, tempC = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
     tempC = 23
-    pressure = 1
     humidity = 56
     print ('Temperature: %f °C' % tempC)
-    print ('Pressure: %f hPa' % pressure)
     print ('Humidity: %f %%rH' % humidity)
-    update_sheet("temperature", tempC, pressure, humidity)
+    update_sheet("temperature", tempC, humidity)
 
 
 if __name__ == '__main__':  

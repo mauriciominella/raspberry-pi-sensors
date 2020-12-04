@@ -18,7 +18,7 @@ def main():
     humidity, temp_c = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
     print(temp_c)
     print(format(humidity, ".2f"))
-    update_sheet('temperature', temp_c, humidity)
+    # update_sheet('temperature', temp_c, humidity)
     #time.sleep(60*MINUTES_BETWEEN_READS)
 
 def update_sheet(sheetname, temperature, humidity):

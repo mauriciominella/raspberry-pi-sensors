@@ -56,6 +56,9 @@ def update_sheet(sheetname, temperature, humidity):
                 insertDataOption='INSERT_ROWS',
                 body=body).execute()                     
 
+def write_to_file(temperature, humidity):
+
+
 
 def main():  
     """main method:
@@ -67,7 +70,7 @@ def main():
     humidity = 56
     print ('Temperature: %f °C' % tempC)
     print ('Humidity: %f %%rH' % humidity)
-    update_sheet("temperature", tempC, humidity)
+# update_sheet("temperature", tempC, humidity)
 
 
 if __name__ == '__main__':  

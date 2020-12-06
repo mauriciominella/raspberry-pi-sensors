@@ -13,7 +13,7 @@ def write_to_file(temperature, humidity):
     sensor_file = Path(file_path)
     date = datetime.datetime.now().isoformat()
 
-    row_to_write = [str(date), temperature, humidity]
+    row_to_write = [str(date), round(temperature, 2), round(humidity, 2)]
     header = ["date", "temp", "humidity"]
 
     if sensor_file.is_file():
